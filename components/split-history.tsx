@@ -17,6 +17,14 @@ export function SplitHistory({
   getPerson,
   onDelete,
 }: SplitHistoryProps) {
+  const formatDate = (date: string | Date) => {
+    const d = new Date(date);
+    const year = d.getUTCFullYear();
+    const month = String(d.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(d.getUTCDate()).padStart(2, "0");
+    return `${day}/${month}/${year}`;
+  };
+
   const sortedExpenses = [...expenses].sort(
     (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
   );
@@ -70,7 +78,7 @@ export function SplitHistory({
                       Paid by <strong>{paidByPerson.name}</strong>
                     </span>
                     <span className="text-muted-foreground">
-                      {new Date(expense.createdAt).toLocaleDateString()}
+                      {formatDate(expense.createdAt)}
                     </span>
                   </div>
 

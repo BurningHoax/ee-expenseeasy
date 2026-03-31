@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LogIn, LogOut, Moon, Sun } from "lucide-react";
@@ -29,14 +28,9 @@ export function Navbar({
   links = defaultLinks,
   brandName = "ExpenseEasy",
 }: NavbarProps) {
-  const [isThemeReady, setIsThemeReady] = useState(false);
   const { theme, setTheme } = useTheme();
   const { isLoading, isLoggedIn, user, logout } = useAuth();
   const router = useRouter();
-
-  useEffect(() => {
-    setIsThemeReady(true);
-  }, []);
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -117,13 +111,8 @@ export function Navbar({
               aria-label="Toggle theme"
               className="rounded-full border border-border bg-card text-foreground shadow-sm"
             >
-              {!isThemeReady ? (
-                <span className="h-5 w-5" />
-              ) : theme === "dark" ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
+              <Sun className="hidden h-5 w-5 dark:block" />
+              <Moon className="h-5 w-5 dark:hidden" />
             </Button>
           </div>
         </div>
