@@ -18,42 +18,33 @@ export function ThemeProvider({
   children: ReactNode;
   storageKey?: string;
 }) {
-  const [theme, setThemeState] = useState<Theme | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
+  const [theme, setThemeState] = useState<Theme>(() => {
+    if (typeof window === "undefined") return "light";
+
+    const storedTheme = localStorage.getItem(storageKey);
+    if (storedTheme === "dark" || storedTheme === "light") {
+      return storedTheme;
+    }
+
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  });
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    localStorage.setItem(storageKey, newTheme);
-
-    const root = document.documentElement;
-    if (newTheme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
   };
 
   useEffect(() => {
-    setIsMounted(true);
-    const storedTheme = localStorage.getItem(storageKey) as Theme | null;
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-
-    const initialTheme = storedTheme || (prefersDark ? "dark" : "light");
-    setThemeState(initialTheme);
-
     const root = document.documentElement;
-    if (initialTheme === "dark") {
+    localStorage.setItem(storageKey, theme);
+
+    if (theme === "dark") {
       root.classList.add("dark");
     } else {
       root.classList.remove("dark");
     }
-  }, [storageKey]);
-
-  if (!isMounted) {
-    return <>{children}</>;
-  }
+  }, [theme, storageKey]);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -66,7 +57,7 @@ export function useTheme() {
   const context = React.useContext(ThemeContext);
   if (!context) {
     return {
-      theme: null as Theme | null,
+      theme: "light" as Theme,
       setTheme: () => {},
     };
   }

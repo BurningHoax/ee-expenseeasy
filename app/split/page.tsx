@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Navbar } from "@/components/navbar";
 import { ProtectedPage } from "@/components/protected-page";
 import { PeopleManagement } from "@/components/people-management";
@@ -10,6 +9,7 @@ import { SettlementView } from "@/components/settlement-view";
 import { SplitHistory } from "@/components/split-history";
 import { Visualization } from "@/components/visualization";
 import { useSplitExpenses } from "@/hooks/use-split-expenses";
+import type { SplitType } from "@/types/split";
 import { Card } from "@/components/ui/card";
 import { Users, TrendingUp, Receipt } from "lucide-react";
 
@@ -33,7 +33,7 @@ export default function SplitToolPage() {
     category: string;
     amount: number;
     paidBy: string;
-    splitType: any;
+    splitType: SplitType;
     splits: Record<string, number>;
     notes?: string;
   }) => {

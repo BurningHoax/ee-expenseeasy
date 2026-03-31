@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/animated-button";
 import { Input } from "@/components/ui/input";
-import { Person, SplitExpense, SplitType } from "@/types/split";
-import { Trash2, Plus } from "lucide-react";
+import { Person, SplitType } from "@/types/split";
+import { Plus } from "lucide-react";
 
 interface AddSplitFormProps {
   people: Person[];

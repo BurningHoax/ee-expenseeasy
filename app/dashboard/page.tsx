@@ -3,12 +3,11 @@
 import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/animated-button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { StatCard } from "@/components/stat-card";
 import { Visualization } from "@/components/visualization";
 import { ExpenseItem } from "@/components/expense-item";
 import { ProtectedPage } from "@/components/protected-page";
-import { useState } from "react";
+import type { SVGProps } from "react";
 import { Plus, Coffee, ShoppingCart, Fuel, Home } from "lucide-react";
 
 const chartData = [
@@ -61,8 +60,6 @@ const recentExpenses = [
 ];
 
 export default function Dashboard() {
-  const [showAddModal, setShowAddModal] = useState(false);
-
   return (
     <ProtectedPage>
       <div className="min-h-screen flex flex-col bg-transparent">
@@ -81,7 +78,7 @@ export default function Dashboard() {
                   Dashboard
                 </h1>
                 <p className="mt-1 text-muted-foreground">
-                  Welcome back! Here's your financial overview.
+                  Welcome back! Here&apos;s your financial overview.
                 </p>
               </div>
               <Button
@@ -89,7 +86,6 @@ export default function Dashboard() {
                 size="lg"
                 animated={true}
                 className="relative z-10"
-                onClick={() => setShowAddModal(!showAddModal)}
               >
                 <Plus className="w-5 h-5 mr-2" />
                 Add Expense
@@ -178,7 +174,7 @@ export default function Dashboard() {
   );
 }
 
-function HomeIcon(props: any) {
+function HomeIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +187,7 @@ function HomeIcon(props: any) {
   );
 }
 
-function TrendIcon(props: any) {
+function TrendIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
